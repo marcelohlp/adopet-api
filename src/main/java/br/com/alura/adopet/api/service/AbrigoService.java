@@ -1,7 +1,6 @@
 package br.com.alura.adopet.api.service;
 
 import br.com.alura.adopet.api.exception.ValidacaoException;
-import br.com.alura.adopet.api.model.dto_util.StringDTOidOuNome;
 import br.com.alura.adopet.api.model.abrigo.Abrigo;
 import br.com.alura.adopet.api.model.abrigo.AbrigoDTOCadastrar;
 import br.com.alura.adopet.api.model.abrigo.AbrigoDTOListar;
@@ -45,9 +44,9 @@ public class AbrigoService {
 
     }
 
-    public List<PetDTOListar> listarPetsDoAbrigo(StringDTOidOuNome dto) {
+    public List<PetDTOListar> listarPetsDoAbrigo(String idOuNome) {
 
-        Abrigo abrigo = carregarAbrigo(dto.idOuNome());
+        Abrigo abrigo = carregarAbrigo(idOuNome);
 
         return petRepository
                 .findByAbrigo(abrigo)

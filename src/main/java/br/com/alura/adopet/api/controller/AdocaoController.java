@@ -7,6 +7,7 @@ import br.com.alura.adopet.api.model.adocao.AdocaoDTOSolicitacao;
 import br.com.alura.adopet.api.service.AdocaoService;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/adocoes")
 public class AdocaoController {
 
+    @Autowired
     private AdocaoService adocaoService;
 
     @PostMapping
@@ -32,7 +34,7 @@ public class AdocaoController {
     @Transactional
     public ResponseEntity<String> aprovar(@RequestBody @Valid AdocaoDTOAprovacao dto) {
         adocaoService.aprovar(dto);
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/reprovar")

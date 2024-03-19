@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidarTelefoneJaCadastrado implements ValidarCadastroTutor {
+public class ValidarEmailJaCadastradoParaTutor implements ValidarCadastroTutor{
 
     @Autowired
     private TutorRepository tutorRepository;
@@ -15,8 +15,8 @@ public class ValidarTelefoneJaCadastrado implements ValidarCadastroTutor {
     @Override
     public void validar(TutorDTOCadastrar dto) {
 
-        if (tutorRepository.existsByTelefone(dto.telefone())) {
-            throw new ValidacaoException("Telefone já cadastrado para outro tutor.");
+        if (tutorRepository.existsByEmail(dto.email())) {
+            throw new ValidacaoException("Email já cadastrado para outro tutor.");
         }
 
     }

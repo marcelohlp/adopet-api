@@ -16,8 +16,6 @@ public class ValidarTutorComLimiteDeAdocoes implements ValidarSolicitacaoAdocao{
 
     @Autowired
     private AdocaoRepository adocaoRepository;
-    @Autowired
-    private TutorRepository tutorRepository;
 
     @Override
     public void validar(AdocaoDTOSolicitacao dto) {

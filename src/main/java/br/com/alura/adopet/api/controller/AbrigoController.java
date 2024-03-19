@@ -1,10 +1,9 @@
 package br.com.alura.adopet.api.controller;
 
+import br.com.alura.adopet.api.exception.ValidacaoException;
 import br.com.alura.adopet.api.model.abrigo.Abrigo;
-import br.com.alura.adopet.api.model.pet.Pet;
 import br.com.alura.adopet.api.model.abrigo.AbrigoDTOCadastrar;
 import br.com.alura.adopet.api.model.abrigo.AbrigoDTOListar;
-import br.com.alura.adopet.api.model.dto_util.StringDTOidOuNome;
 import br.com.alura.adopet.api.model.pet.PetDTOCadastrar;
 import br.com.alura.adopet.api.model.pet.PetDTOListar;
 import br.com.alura.adopet.api.service.AbrigoService;
@@ -48,25 +47,25 @@ public class AbrigoController {
     }
 
     @GetMapping("/{idOuNome}/pets")
-    public ResponseEntity<List<PetDTOListar>> listarPets(@PathVariable StringDTOidOuNome dto) {
+    public ResponseEntity<List<PetDTOListar>> listarPets(@PathVariable String idOuNome) {
 
         try {
-            return ResponseEntity.ok(abrigoService.listarPetsDoAbrigo(dto));
-        } catch (ValidationException e) {
-            return  ResponseEntity.badRequest().build();
+            return ResponseEntity.ok(abrigoService.listarPetsDoAbrigo(idOuNome));
+        } catch (ValidacaoException e) {
+            return  ResponseEntity.notFound().build();
         }
 
     }
 
     @PostMapping("/{idOuNome}/pets")
     @Transactional
-    public ResponseEntity<String> cadastrarPet(@PathVariable StringDTOidOuNome stringDto, @RequestBody @Valid PetDTOCadastrar petDto) {
+    public ResponseEntity<String> cadastrarPet(@PathVariable String idOuNome, @RequestBody @Valid PetDTOCadastrar petDto) {
 
         try {
-            Abrigo abrigo = abrigoService.carregarAbrigo(stringDto.idOuNome());
+            Abrigo abrigo = abrigoService.carregarAbrigo(idOuNome);
             petService.cadastrarPet(petDto, abrigo);
             return ResponseEntity.ok().build();
-        } catch (ValidationException e) {
+        } catch (ValidacaoException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
